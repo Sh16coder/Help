@@ -16,7 +16,18 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js"></script>
-    
+    <!-- Add this to your index.html head -->
+<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
+<script>
+  window.OneSignal = window.OneSignal || [];
+  OneSignal.push(function() {
+    OneSignal.init({
+      appId: "YOUR_ONESIGNAL_APP_ID", // Replace with your actual App ID
+      allowLocalhostAsSecureOrigin: true, // For testing locally
+      autoRegister: false, // We'll trigger manually
+    });
+  });
+</script>
     <style>
         * {
             margin: 0;
@@ -1287,6 +1298,84 @@ if ('serviceWorker' in navigator) {
       console.error('Firebase messaging SW registration failed:', error);
     });
 }
+        // OneSignal Notification Manager
+class OneSignalManager {
+    constructor() {
+        this.isInitialized = false;
+        this.init();
+    }
+    
+    async init() {
+        if (typeof OneSignal === 'undefined') {
+            console.log('OneSignal not loaded yet');
+            return;
+        }
+        
+        try {
+            // Check current permission
+            const permission = await OneSignal.getNotificationPermission();
+            
+            if (permission === 'granted') {
+                this.isInitialized = true;
+                console.log('OneSignal already granted');
+            }
+            
+        } catch (error) {
+            console.error('OneSignal init error:', error);
+        }
+    }
+    
+    // Request notification permission
+    async enableNotifications() {
+        try {
+            const permission = await OneSignal.registerForPushNotifications();
+            
+            if (permission) {
+                this.isInitialized = true;
+                console.log('OneSignal notifications enabled');
+                return true;
+            }
+            
+            return false;
+            
+        } catch (error) {
+            console.error('Error enabling OneSignal:', error);
+            return false;
+        }
+    }
+    
+    // Send notification to specific user (from OneSignal dashboard)
+    // This is manual - you send from their website
+    async sendNotificationFromDashboard(title, message, url = '/') {
+        console.log('To send notification, go to OneSignal dashboard and create notification manually');
+        console.log('Or use their REST API (requires minimal backend)');
+    }
+    
+    // Get current user ID (for targeting)
+    async getUserId() {
+        if (!this.isInitialized) return null;
+        
+        try {
+            const userId = await OneSignal.getUserId();
+            return userId;
+        } catch (error) {
+            console.error('Error getting user ID:', error);
+            return null;
+        }
+    }
+}
+
+// Initialize OneSignal manager
+const oneSignalManager = new OneSignalManager();
+
+// Add to your existing notification button
+document.getElementById('notificationBtn').addEventListener('click', async () => {
+    const success = await oneSignalManager.enableNotifications();
+    if (success) {
+        alert('Notifications enabled! You can now send notifications from OneSignal dashboard.');
+        document.getElementById('notificationBtn').style.display = 'none';
+    }
+});
     </script>
 </body>
 </html>

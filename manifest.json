@@ -1,0 +1,24 @@
+{
+  "name": "Please Help Shaurya",
+  "short_name": "MentorShaurya",
+  "description": "Mentorship platform for Shaurya to get help from mentors",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF5E4",
+  "theme_color": "#FF9A76",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍🏫</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👨‍🏫</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "lang": "en-US"
+}

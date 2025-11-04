@@ -599,6 +599,38 @@
             .tab-btn {
                 text-align: left;
             }
+              .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+        
+        .music-control:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+        
+        .music-control i {
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .hidden {
+            display: none;
+        }
         }
     </style>
 </head>
@@ -714,7 +746,11 @@
             </div>
         </main>
     </div>
-
+   <audio id="backgroundMusic" loop>
+        <!-- Replace with your own music file -->
+        <source src="130.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+   </audio>
     <script>
         // =============================================
         // FIREBASE CONFIGURATION
@@ -1375,7 +1411,46 @@ document.getElementById('notificationBtn').addEventListener('click', async () =>
         alert('Notifications enabled! You can now send notifications from OneSignal dashboard.');
         document.getElementById('notificationBtn').style.display = 'none';
     }
-});
+}); 
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const backgroundMusic = document.getElementById('backgroundMusic');
+            const musicControl = document.getElementById('musicControl');
+            const musicIcon = musicControl.querySelector('i');
+            
+            // Try to play music automatically when page loads
+            const playMusic = () => {
+                backgroundMusic.volume = 0.5; // Set volume to 50%
+                backgroundMusic.play().catch(error => {
+                    console.log('Autoplay prevented:', error);
+                    // Show a message if autoplay is blocked
+                    musicControl.style.backgroundColor = 'rgba(255, 100, 100, 0.3)';
+                });
+            };
+            
+            // Play music when user interacts with the page (required by some browsers)
+            document.body.addEventListener('click', function() {
+                if (backgroundMusic.paused) {
+                    playMusic();
+                }
+            }, { once: true });
+            
+            // Initial attempt to play
+            playMusic();
+            
+            // Toggle music on/off when control is clicked
+            musicControl.addEventListener('click', function() {
+                if (backgroundMusic.paused) {
+                    backgroundMusic.play();
+                    musicIcon.className = 'fas fa-volume-up';
+                    musicControl.style.backgroundColor = 'rgba(255, 255, 255, 0.2)';
+                } else {
+                    backgroundMusic.pause();
+                    musicIcon.className = 'fas fa-volume-mute';
+                    musicControl.style.backgroundColor = 'rgba(255, 100, 100, 0.3)';
+                }
+            });
+        });
     </script>
 </body>
 </html>

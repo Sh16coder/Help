@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Closing Our Special Website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Rounded MT Bold', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0f8ff 0%, #f5f5f5 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 105, 180, 0.15);
+            overflow: hidden;
+            border: 3px solid #4b6cb7;
+            animation: gentleAppear 1s ease-out;
+        }
+        
+        @keyframes gentleAppear {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .header {
+            background: linear-gradient(to right, #4b6cb7, #182848);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header:after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: #4b6cb7;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 35px;
+            line-height: 1.7;
+            font-size: 1.1rem;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%23e8f4ff" d="M50,20 C60,10 80,15 80,30 C80,50 50,70 50,70 C50,70 20,50 20,30 C20,15 40,10 50,20 Z"/></svg>') repeat;
+            background-size: 60px;
+        }
+        
+        .personal-note {
+            background-color: #f0f8ff;
+            border: 2px dashed #4b6cb7;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+            position: relative;
+        }
+        
+        .personal-note:before {
+            content: "\f075";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            left: -12px;
+            top: -12px;
+            background-color: #4b6cb7;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            z-index: 2;
+        }
+        
+        .highlight {
+            background-color: #fffacd;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #d2691e;
+        }
+        
+        .emphasis {
+            color: #182848;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .thank-you-section {
+            text-align: center;
+            padding: 25px 0;
+            margin: 25px 0;
+            border-top: 2px dotted #a8c6ff;
+            border-bottom: 2px dotted #a8c6ff;
+        }
+        
+        .big-thank-you {
+            font-size: 2.8rem;
+            color: #182848;
+            font-weight: bold;
+            margin: 15px 0;
+            text-shadow: 3px 3px 0 #e8f4ff;
+            line-height: 1.2;
+        }
+        
+        .reason-box {
+            background-color: #f0fff0;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border-left: 5px solid #32cd32;
+        }
+        
+        .reason-box h3 {
+            color: #228b22;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .jai-hind-box {
+            background: linear-gradient(to right, #ff8a00, #182848);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-top: 30px;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+            letter-spacing: 2px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .closing-line {
+            text-align: center;
+            margin-top: 30px;
+            font-style: italic;
+            color: #555;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+        }
+        
+        .signature {
+            text-align: right;
+            margin-top: 40px;
+            padding-right: 20px;
+        }
+        
+        .signature-name {
+            font-family: 'Brush Script MT', cursive;
+            font-size: 2.5rem;
+            color: #182848;
+            margin-top: 10px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #e8f4ff;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .emoji {
+            font-size: 1.5rem;
+            margin: 0 5px;
+        }
+        
+        .simple-icon {
+            color: #4b6cb7;
+            margin: 0 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .big-thank-you { font-size: 2.2rem; }
+            .content { padding: 25px; }
+            .jai-hind-box { font-size: 1.7rem; }
+            .signature-name { font-size: 2rem; }
+        }
+        
+        @media (max-width: 480px) {
+            .header { padding: 20px; }
+            .header h1 { font-size: 1.6rem; }
+            .content { padding: 20px; }
+            .big-thank-you { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Hey Mentor Mam <i class="fas fa-user-graduate simple-icon"></i></h1>
+            <p>A personal message just for you...</p>
+        </div>
+        
+        <div class="content">
+            <p>Hi Mam,</p>
+            
+            <div class="personal-note">
+                I've decided to close down our special website. I feel like it might be disturbing you during your studies, and I really don't want to do that. 
+                <span class="emphasis">That's why I'm closing it.</span>
+            </div>
+            
+            <p>I know how important your studies are, and I don't want to be even a tiny distraction. You've always taught me to focus on what matters, and right now, your studies matter the most!</p>
+            
+            <div class="reason-box">
+                <h3><i class="fas fa-graduation-cap"></i> The Real Reason</h3>
+                <p>Your focus should be 100% on your studies, not checking our website. I care about your success more than keeping this site running.</p>
+            </div>
+            
+            <div class="thank-you-section">
+                <p>Mam, I just want to say...</p>
+                <div class="big-thank-you">
+                    Thank you <span class="emoji">🙏</span><br>
+                    soo soo soo soo much<br>
+                    for everything!
+                </div>
+                <p>For all your guidance, patience, and support. You're amazing!</p>
+            </div>
+            
+            <p>This website was special because it was just ours, but your future is even more special. Go rock those studies! <span class="emoji">✨</span></p>
+            
+            <div class="jai-hind-box">
+                <i class="fas fa-flag"></i> JAI HIND to you, Mam! <i class="fas fa-flag"></i>
+            </div>
+            
+            <div class="closing-line">
+                <p>This will be our last message here... but definitely not our last conversation!</p>
+                <p><i class="fas fa-smile-wink"></i> Will talk to you soon, promise!</p>
+            </div>
+            
+            <div class="signature">
+                <p>With lots of respect and gratitude,</p>
+                <div class="signature-name">Your Student</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><i class="fas fa-handshake simple-icon"></i> Our private website - Closing with respect <i class="fas fa-book simple-icon"></i></p>
+            <p>Last visit: Today <i class="far fa-clock"></i></p>
+        </div>
+    </div>
+    
+    <script>
+        // Simple animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Typing effect for the personal note
+            const personalNote = document.querySelector('.personal-note');
+            const originalText = personalNote.innerHTML;
+            personalNote.innerHTML = '';
+            
+            let i = 0;
+            function typeWriter() {
+                if (i < originalText.length) {
+                    personalNote.innerHTML += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 30);
+                }
+            }
+            
+            // Start typing after a short delay
+            setTimeout(() => {
+                typeWriter();
+            }, 1000);
+            
+            // Simple fade-in for sections
+            const sections = document.querySelectorAll('.thank-you-section, .reason-box, .jai-hind-box');
+            
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                
+                setTimeout(() => {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, 500 + (index * 300));
+            });
+            
+            // Color change for thank you text
+            const thankYou = document.querySelector('.big-thank-you');
+            let colors = ['#182848', '#4b6cb7', '#2c5282'];
+            let colorIndex = 0;
+            
+            setInterval(() => {
+                thankYou.style.color = colors[colorIndex];
+                colorIndex = (colorIndex + 1) % colors.length;
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

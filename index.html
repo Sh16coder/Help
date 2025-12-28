@@ -665,10 +665,100 @@
             .tab-btn {
                 text-align: left;
             }
+        /* Password overlay - will cover your entire site */
+#passwordOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+.password-box {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    border-top: 5px solid #4a6ee0;
+}
+
+.password-title {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.password-subtitle {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+.password-input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    transition: border 0.3s;
+}
+
+.password-input:focus {
+    outline: none;
+    border-color: #4a6ee0;
+}
+
+.password-button {
+    background: #4a6ee0;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s;
+}
+
+.password-button:hover {
+    background: #3a5ed0;
+}
+
+.password-error {
+    color: #e74c3c;
+    margin-top: 10px;
+    display: none;
+}
+
+.password-hint {
+    color: #7f8c8d;
+    font-size: 12px;
+    margin-top: 20px;
+}
         }
     </style>
 </head>
 <body>
+    <div id="passwordOverlay">
+    <div class="password-box">
+        <h2 class="password-title">🔒 Protected Content</h2>
+        <p class="password-subtitle">Enter password to access this website</p>
+        <input type="password" id="passwordInput" class="password-input" placeholder="Enter password" autocomplete="off">
+        <button id="passwordSubmit" class="password-button">Access Website</button>
+        <div id="passwordError" class="password-error">❌ Incorrect password. Try again.</div>
+        <div class="password-hint">Hint: The password is "access123"</div>
+    </div>
+</div>
     <!-- Install Button -->
     <button class="install-btn" id="installBtn">
         <i class="fas fa-download"></i> Install App
@@ -1507,6 +1597,58 @@
         });
 
         console.log("App initialized with image compression feature");
+        // Set your password here
+const CORRECT_PASSWORD = "maharaj shaurya";
+
+document.addEventListener('DOMContentLoaded', function() {
+    const passwordOverlay = document.getElementById('passwordOverlay');
+    const passwordInput = document.getElementById('passwordInput');
+    const passwordSubmit = document.getElementById('passwordSubmit');
+    const passwordError = document.getElementById('passwordError');
+    
+    // Check if password is already entered
+    if(localStorage.getItem('passwordEntered') === 'true') {
+        passwordOverlay.style.display = 'none';
+    }
+    
+    // Submit password on button click
+    passwordSubmit.addEventListener('click', checkPassword);
+    
+    // Submit password on Enter key
+    passwordInput.addEventListener('keypress', function(e) {
+        if(e.key === 'Enter') checkPassword();
+    });
+    
+    function checkPassword() {
+        if(passwordInput.value === CORRECT_PASSWORD) {
+            // Correct password - hide overlay
+            passwordOverlay.style.display = 'none';
+            // Store in localStorage so password persists during session
+            localStorage.setItem('passwordEntered', 'true');
+        } else {
+            // Wrong password - show error
+            passwordError.style.display = 'block';
+            passwordInput.value = '';
+            passwordInput.focus();
+            // Shake animation
+            passwordOverlay.style.animation = 'none';
+            setTimeout(() => {
+                passwordOverlay.style.animation = 'shake 0.5s';
+            }, 10);
+        }
+    }
+    
+    // Add shake animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+    `;
+    document.head.appendChild(style);
+});
     </script>
 </body>
 </html>

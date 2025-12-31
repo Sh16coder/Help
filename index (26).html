@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Access Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #3a7bd5);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .logo {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .logo i {
+            font-size: 3.5rem;
+            color: #4cc9f0;
+            background: rgba(255, 255, 255, 0.1);
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #4cc9f0, #4361ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 35px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+        
+        .password-container {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 16px 20px;
+            padding-right: 50px;
+            font-size: 1.2rem;
+            background-color: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .password-input:focus {
+            border-color: #4cc9f0;
+            box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.2);
+        }
+        
+        .password-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(to right, #4361ee, #3a0ca3);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(to right, #3a0ca3, #4361ee);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .message {
+            min-height: 24px;
+            margin-top: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .success {
+            color: #4ade80;
+        }
+        
+        .error {
+            color: #f87171;
+        }
+        
+        .hint {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .hint i {
+            color: #fbbf24;
+            margin-right: 8px;
+        }
+        
+        .attempts {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        footer {
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Animation for success */
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .success-animation {
+            animation: successPulse 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-lock"></i>
+        </div>
+        
+        <h1>Secure Access Portal</h1>
+        <p class="subtitle">Enter the correct password to access the restricted content. The password is case-sensitive.</p>
+        
+        <div class="password-container">
+            <input type="password" id="passwordInput" class="password-input" placeholder="Enter password here..." autocomplete="off">
+            <button type="button" id="togglePassword" class="toggle-password">
+                <i class="fas fa-eye"></i>
+            </button>
+        </div>
+        
+        <button id="submitBtn" class="submit-btn">
+            <i class="fas fa-unlock-alt"></i> Access Content
+        </button>
+        
+        <div id="message" class="message"></div>
+        
+        <div class="attempts">
+            Attempts: <span id="attemptCount">0</span>
+        </div>
+        
+        <div class="hint">
+            <i class="fas fa-lightbulb"></i> 
+            <span id="hintText">No Hint</span>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Secure Access System &copy; 2023 | For authorized personnel only</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('passwordInput');
+            const togglePassword = document.getElementById('togglePassword');
+            const submitBtn = document.getElementById('submitBtn');
+            const message = document.getElementById('message');
+            const attemptCount = document.getElementById('attemptCount');
+            const hintText = document.getElementById('hintText');
+            
+            let attempts = 0;
+            let passwordVisible = false;
+            
+            // Toggle password visibility
+            togglePassword.addEventListener('click', function() {
+                passwordVisible = !passwordVisible;
+                if (passwordVisible) {
+                    passwordInput.type = 'text';
+                    togglePassword.innerHTML = '<i class="fas fa-eye-slash"></i>';
+                } else {
+                    passwordInput.type = 'password';
+                    togglePassword.innerHTML = '<i class="fas fa-eye"></i>';
+                }
+            });
+            
+            // Submit password on button click
+            submitBtn.addEventListener('click', checkPassword);
+            
+            // Submit password on Enter key
+            passwordInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+            
+            function checkPassword() {
+                const password = passwordInput.value.trim();
+                
+                // Increment attempt counter
+                attempts++;
+                attemptCount.textContent = attempts;
+                
+                // Check if password is correct
+                if (password === 'VIDYORA') {
+                    // Success
+                    message.textContent = 'Password correct! Redirecting...';
+                    message.className = 'message success';
+                    
+                    // Add success animation to container
+                    document.querySelector('.container').classList.add('success-animation');
+                    
+                    // Disable input and button
+                    passwordInput.disabled = true;
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Access Granted!';
+                    submitBtn.style.background = 'linear-gradient(to right, #10b981, #059669)';
+                    
+                    // Redirect after 1.5 seconds
+                    setTimeout(function() {
+                        window.location.href = 'https://help-sa.vercel.app/';
+                    }, 1500);
+                    
+                } else {
+                    // Failure
+                    message.textContent = 'Incorrect password. Please try again.';
+                    message.className = 'message error';
+                    
+                    // Clear input and focus
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                    
+                    // Shake animation for error
+                    passwordInput.style.animation = 'none';
+                    setTimeout(() => {
+                        passwordInput.style.animation = 'shake 0.5s';
+                    }, 10);
+                    
+                    // Provide hints after multiple attempts
+                    if (attempts >= 3) {
+                        hintText.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Hint: The password is 7 characters long, all uppercase';
+                    }
+                    
+                    if (attempts >= 5) {
+                        hintText.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Hint: The password starts with "V" and ends with "A"';
+                    }
+                    
+                    if (attempts >= 7) {
+                        hintText.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Hint: The password is "VIDYORA"';
+                    }
+                }
+            }
+            
+            // Add shake animation for errors
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes shake {
+                    0%, 100% {transform: translateX(0);}
+                    10%, 30%, 50%, 70%, 90% {transform: translateX(-5px);}
+                    20%, 40%, 60%, 80% {transform: translateX(5px);}
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Focus on password input when page loads
+            passwordInput.focus();
+        });
+    </script>
+</body>
+</html>
